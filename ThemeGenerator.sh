@@ -14,7 +14,7 @@
 #
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 
-XMLTAG="<?xml version="1.0" encoding="UTF-8"?>"
+XMLTAG="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 RESOURCE_START="<resource-redirections>"
 RESOURCE_END="</resource-redirections>"
 RESOURCE_NAME="<item name=\"drawable/"
