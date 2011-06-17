@@ -1,65 +1,41 @@
 #!/bin/bash
-#            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-#                    Version 2, December 2004
-#
-# Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
-# Copyright (C) 2011 T3hh4xx0r <r2doesinc@gmail.com>
-#
-# Everyone is permitted to copy and distribute verbatim or modified
-# copies of this license document, and changing it is allowed as long
-# as the name is changed.
-#
-#            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-#   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-#
-#  0. You just DO WHAT THE FUCK YOU WANT TO.
+DATE=$(date +"%m-%d-%y")
 
-XMLTAG="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-RESOURCE_START="<resource-redirections>"
-RESOURCE_END="</resource-redirections>"
-RESOURCE_NAME="<item name=\"drawable/"
-DRAWABLE_NAME=">@drawable/$pname"
-
-echo "============================================================================================================================"
-echo 'What this package will do is generate the xml needed, and rename all of the images in the CURRENT directory to match the xml'
-echo "What this package will NOT do is create any .java files, or setup any directories. This is ONLY for generating the xmls and"
-echo "for batch renaming the images. Hope you find it as useful as I did!"
-echo "============================================================================================================================"
-echo " "
-echo " "
-echo 'Enter the package name, ex. com.android.inputmethod.latin or frameworks.res'
-echo " "
-echo " "
-
-read pname
-: ${new_pname:="${pname//./_}"}
-
-if [ $new_pname == frameworks_res ]
+if [ -d MyTheme ];
 then
-touch android.xml
-echo $XMLTAG >> android.xml
-echo $RESOURCE_START >> android.xml
-for i in *.png
-do
-        echo $RESOURCE_NAME${i/.9.png}$DRAWABLE_NAME$new_pname"_"$i\</item\> >> android.xml
-done
-for file in *.png
-do
-        mv $file $new_pname"_"$file
-done
-echo $RESOURCE_END >> android.xml
-
+clear
+echo "==========================================================================="
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "==========================================================================="
+echo "Theres already a theme in the working folder."
+echo "1) Continue using current theme."
+echo "2) Start a new theme."
+echo "==========================================================================="
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "==========================================================================="
+read del
+case $del in
+1)echo "";;
+2)mv MyTheme MyOldTheme_$DATE; mkdir MyTheme; mkdir MyTheme/res/; mkdir MyTheme/res/xml/; mkdir MyTheme/res/values/;;
+esac
 else
-touch $new_pname.xml
-echo $XMLTAG >> $new_pname.xml
-echo $RESOURCE_START >> $new_pname.xml
-for i in *.png
-do
-	echo $RESOURCE_NAME${i/.9.png}$DRAWABLE_NAME$new_pname"_"$i\</item\> >> $new_pname.xml
-done
-for file in *.png
-do
-	mv $file $new_pname"_"$file
-done
-echo $RESOURCE_END >> $new_pname.xml
+mkdir MyTheme
+mkdir MyTheme/res/
+mkdir MyTheme/res/xml/
+mkdir MyTheme/res/values/
 fi
+
+clear
+echo "==========================================================================="
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "==========================================================================="
+echo "1) Generate the theme skeleton. Makefiles and Manifest, etc."
+echo "2) Generate the package xmls and prepare the images."
+echo "==========================================================================="
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "==========================================================================="
+read opt
+case $opt in
+	1)./assets/skeleton_setup.sh;;
+	2)./assets/xml_generator.sh;;
+esac
