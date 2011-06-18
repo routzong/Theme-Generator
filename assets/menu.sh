@@ -14,31 +14,18 @@
 #
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 
-DATE=$(date +"%m-%d-%y")
-
-if [ -d MyTheme ];
-then
 clear
 echo "==========================================================================="
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "==========================================================================="
-echo "Theres already a theme in the working folder."
-echo "1) Continue using current theme."
-echo "2) Start a new theme."
+echo "1) Generate the theme skeleton. Makefile, Manifest, java files, etc."
+echo "2) Generate the themed app xmls and prepare the images."
 echo "==========================================================================="
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "==========================================================================="
-read del
-case $del in
-1)echo "";;
-2)mv MyTheme MyOldTheme_$DATE; mkdir MyTheme; mkdir MyTheme/res/; mkdir MyTheme/res/xml/; mkdir MyTheme/res/values/;;
+read opt
+case $opt in
+        1)./assets/skeleton_setup.sh;;
+        2)./assets/xml_generator.sh;;
 esac
-else
-mkdir MyTheme
-mkdir MyTheme/res/
-mkdir MyTheme/res/xml/
-mkdir MyTheme/res/values/
-fi
-
-./assets/menu.sh
 
