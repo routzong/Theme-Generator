@@ -18,7 +18,7 @@ XMLTAG="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 RESOURCE_START="<resource-redirections>"
 RESOURCE_END="</resource-redirections>"
 RESOURCE_NAME="<item name=\"drawable/"
-DRAWABLE_NAME=">@drawable/$pname"
+DRAWABLE_NAME="\">@drawable/"
 DRAWABLE_DIR="./DRAWABLES"
 
 mkdir $DRAWABLE_DIR
@@ -67,9 +67,13 @@ then
 touch android.xml
 echo $XMLTAG >> android.xml
 echo $RESOURCE_START >> android.xml
+for i in *.9.png
+do
+        echo $RESOURCE_NAME${i/.9.png}$DRAWABLE_NAME$new_pname"_"${i/.9.png}\</item\> >> android.xml
+done
 for i in *.png
 do
-        echo $RESOURCE_NAME${i/.9.png}$DRAWABLE_NAME$new_pname"_"$i\</item\> >> android.xml
+        echo $RESOURCE_NAME${i/.png}$DRAWABLE_NAME$new_pname"_"${i/.png}\</item\> >> android.xml
 done
 for file in *.png
 do
