@@ -71,6 +71,7 @@ for i in *.9.png
 do
         echo $RESOURCE_NAME${i/.9.png}$DRAWABLE_NAME$new_pname"_"${i/.9.png}\</item\> >> android.xml
 done
+
 for i in *.png
 do
         echo $RESOURCE_NAME${i/.png}$DRAWABLE_NAME$new_pname"_"${i/.png}\</item\> >> android.xml
@@ -79,20 +80,27 @@ for file in *.png
 do
         mv $file $new_pname"_"$file
 done
+
 echo $RESOURCE_END >> android.xml
 
 else
 touch $new_pname.xml
 echo $XMLTAG >> $new_pname.xml
 echo $RESOURCE_START >> $new_pname.xml
+for i in *.9.png
+do
+        echo $RESOURCE_NAME${i/.9.png}$DRAWABLE_NAME$new_pname"_"${i/.9.png}\</item\> >> $new_pname.xml
+done
+
 for i in *.png
 do
-	echo $RESOURCE_NAME${i/.9.png}$DRAWABLE_NAME$new_pname"_"$i\</item\> >> $new_pname.xml
+        echo $RESOURCE_NAME${i/.png}$DRAWABLE_NAME$new_pname"_"${i/.png}\</item\> >> $new_pname.xml
 done
 for file in *.png
 do
-	mv $file $new_pname"_"$file
+        mv $file $new_pname"_"$file
 done
+
 echo $RESOURCE_END >> $new_pname.xml
 fi
 
