@@ -69,8 +69,15 @@ echo "==========================================================================
 
 read pname
 : ${new_pname:="${pname//./_}"}
+
+for file in *.png
+do
+        mv $file $new_pname"_"$file
+done
+
 if [ $new_pname == frameworks_res ]
 then
+
 touch android.xml
 sed -i "1 a\\$PACKAGE_REDIR_START android:name=\"android\" android:resource=\"@xml/android\" android:minSdkVersion=\"7\" />" redirections.xml 
 
@@ -81,17 +88,14 @@ do
         echo $RESOURCE_NAME${i/.png}$DRAWABLE_NAME$new_pname"_"${i/.png}\</item\> >> android.xml
 done
 
-sed -i 's/.9\"/\"/g' $new_pname.xml
-
-for file in *.png
-do
-        mv $file $new_pname"_"$file
-done
+sed -i 's/.9\"/\"/g' android.xml
+sed -i 's/.9</</g' android.xml
 
 echo $RESOURCE_END >> android.xml
 mv android.xml ../MyTheme/res/xml/
 
 else
+
 sed -i "1 a\\$PACKAGE_REDIR_START android:name=\"$new_pname\" android:resource=\"@xml/$new_pname\" android:minSdkVersion=\"7\" />" redirections.xml
 touch $new_pname.xml
 echo $XMLTAG >> $new_pname.xml
@@ -103,11 +107,7 @@ do
 done 
 
 sed -i 's/.9\"/\"/g' $new_pname.xml
-
-for file in *.png
-do
-        mv $file $new_pname"_"$file
-done
+sed -i 's/.9</</g' $new_pname.xml
 
 echo $RESOURCE_END >> $new_pname.xml
 mv $new_pname.xml ../MyTheme/res/xml/
