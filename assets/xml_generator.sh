@@ -28,9 +28,13 @@ PACKAGE_REDIR_END="</package-redirections>"
 
 mkdir $DRAWABLE_DIR
 pushd $DRAWABLE_DIR
+
+if [ ! -f redirections.xml ]
+then
 touch redirections.xml
 echo $THEME_REDIR_START >> redirections.xml
 echo $THEME_REDIR_END >> redirections.xml
+fi
 
 clear
 echo "==========================================================================="
@@ -79,7 +83,7 @@ if [ $new_pname == frameworks_res ]
 then
 
 touch android.xml
-sed -i "1 a\\$PACKAGE_REDIR_START android:name=\"android\" android:resource=\"@xml/android\" android:minSdkVersion=\"7\" />" redirections.xml 
+sed -i '/^<theme-redirections/a \$PACKAGE_REDIR_START android:name=\"android\" android:resource=\"@xml/android\" android:minSdkVersion=\"7\" />' redirections.xml 
 
 echo $XMLTAG >> android.xml
 echo $RESOURCE_START >> android.xml
@@ -96,7 +100,7 @@ mv android.xml ../MyTheme/res/xml/
 
 else
 
-sed -i "1 a\\$PACKAGE_REDIR_START android:name=\"$new_pname\" android:resource=\"@xml/$new_pname\" android:minSdkVersion=\"7\" />" redirections.xml
+sed -i '/^<theme-redirections/a $PACKAGE_REDIR_START android:name=\"$new_pname\" android:resource=\"@xml/$new_pname\" android:minSdkVersion=\"7\" />' redirections.xml
 touch $new_pname.xml
 echo $XMLTAG >> $new_pname.xml
 echo $RESOURCE_START >> $new_pname.xml
@@ -114,7 +118,8 @@ mv $new_pname.xml ../MyTheme/res/xml/
 fi
 
 popd
+mkdir MyTheme/res/$DENSITY/
 mv $DRAWABLE_DIR/redirections.xml MyTheme/res/xml/
-mv $DRAWABLE_DIR MyTheme/res/$DENSITY
+mv $DRAWABLE_DIR/* MyTheme/res/$DENSITY/
 rm -rf $DRAWABLE_DIR
 ./ThemeGenerator.sh
